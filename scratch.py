@@ -1,23 +1,30 @@
-def calculate_moves():
-    set_number = 1
-
+def order_coaches():
     while True:
-        columns = int(input())
-        if columns == 0:
+        train_length = int(input())
+        if train_length == 0:
             break
 
-        heights = [int(height) for height in input().split()]
-        total_bricks = sum(heights)
-        average_height = total_bricks // columns
+        while True:
+            permutation = input()
+            if permutation == "0":
+                break
+            
+            permutation = [int(listItem) for listItem in permutation.split()]
+            station_stack = []
+            for coach in range(1, train_length + 1):
+                while len(station_stack) > 0 and station_stack[-1] == permutation[0]:
+                    station_stack.pop()
+                    permutation.pop(0)
 
-        bricks_to_move = 0
-        for height in heights:
-            if height > average_height:
-                bricks_to_move += height - average_height
-        
-        print(f"Set #{set_number}")
-        print(f"The minimum number of moves is {bricks_to_move}.\n")
+                if coach == permutation[0]:
+                    permutation.pop(0)
+                else:
+                    station_stack.append(coach)
+            
+            if len(station_stack) == 0:
+                print("Yes")
+            else:
+                print("No")
+        print()
 
-        set_number += 1
-
-calculate_moves()
+order_coaches()
